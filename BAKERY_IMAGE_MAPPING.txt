@@ -1,0 +1,30 @@
+EVAN COFFEE v5 - Bakery update
+
+Bakery image mapping verified from the labels in the supplied source images:
+
+Cookies (150 thousand):
+- cookie_snickerdoodle.jpg = کوکی اسنیکرن (بادام زمینی، کارامل و مارشمالو)
+- cookie_hazelnut_chocolate.jpg = کوکی شکلات فندق
+- cookie_apple_walnut_cinnamon.jpg = کوکی سیب، گردو و دارچین
+- cookie_protein.jpg = کوکی پروتئینی
+- cookie_black_forest.jpg = کوکی بلک فارست
+- cookie_diet.jpg = کوکی رژیمی (جو، توت و کشمش)
+- cookie_chocolate_metro_walnut.jpg = کوکی شکلات مترو گردو
+- cookie_oatmeal.jpg = کوکی اوتمیل
+
+Cheesecakes (260 thousand):
+- cheesecake_double_chocolate.jpg = جارکیک دبل چاکلت
+- cheesecake_lotus.jpg = جارکیک لوتوس
+- cheesecake_banana_caramel.jpg = جارکیک موز و کارامل
+
+Croissants (250 thousand):
+- croissant_nutella.jpg = کروسان نوتلا
+
+Oatmeal (270 thousand):
+- oatmeal_cocoa_protein.jpg = اوتمیل کاکائویی، ۵ گرم پروتئین
+
+Important: the supplied images also contain Danish, strudel, cinnamon roll, chocolate twist and other bakery products. They were NOT put under croissants because their own labels identify them as different products. This avoids mislabeling.
+
+QR:
+- qr.html was added as a QR generator for the owner. It automatically proposes the current site's index URL.
+- A final printable table QR cannot be pre-generated until the site has its real public URL/domain.
