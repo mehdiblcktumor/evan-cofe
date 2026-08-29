@@ -36,7 +36,6 @@ h1{font:500 36px "Playfair Display",serif}
 .btn:hover{transform:translateY(-2px)}
 .whatsapp{color:#f5f1e9;background:linear-gradient(135deg,#1f6d42,#174f31);border:1px solid #5fae82}
 .whatsapp svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6}
-.neshan{color:var(--gold);background:transparent;border:1px solid #c7a76a59}
 footer{text-align:center;color:#4e4b46;font-size:9px;letter-spacing:1px;padding-top:34px}
 footer span{color:var(--gold)}
 </style>
@@ -49,7 +48,7 @@ footer span{color:var(--gold)}
 <div class="spacer"></div>
 </div>
 <header class="hero">
-<div class="kicker">CONTACT & LOCATION</div>
+<div class="kicker">CONTACT</div>
 <h1>با ما در ارتباط باشید</h1>
 <p>هر زمان که خواستید، راه ارتباط با EVAN COFFEE همین‌جاست.</p>
 <div class="line"></div>
@@ -57,10 +56,6 @@ footer span{color:var(--gold)}
 
 <div class="card">
 <div class="info-row">
-<div class="item">
-<div class="icon"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z"/><circle cx="12" cy="9" r="2.3"/></svg></div>
-<div><div class="label">آدرس</div><div class="value">نبرد جنوبی، بلوار ابوذر، پل ۵، خیابان ده حقی</div></div>
-</div>
 <div class="item">
 <div class="icon"><svg viewBox="0 0 24 24"><path d="M21 15.5a2 2 0 0 1-2.2 2 16.5 16.5 0 0 1-12.3-12.3A2 2 0 0 1 8.5 3l2 2a2 2 0 0 1 .3 2.3l-.9 1.4a12 12 0 0 0 5.4 5.4l1.4-.9a2 2 0 0 1 2.3.3l2 2z"/></svg></div>
 <div><div class="label">شماره تماس</div><div class="value phone">0912 414 1037</div></div>
@@ -76,39 +71,6 @@ footer span{color:var(--gold)}
 <svg viewBox="0 0 24 24"><path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.6-4A8 8 0 1 1 20 11.5Z"/><path d="M9 8.5c.2 1.4 1.6 3.3 3.3 4.1.7.3 1.2.3 1.6-.2l.6-.8c.2-.2.5-.2.8 0l1.1.6c.3.2.4.5.2.8-.5.8-1.3 1.2-2.2 1.1-2.5-.3-5.8-3-6.5-5.4-.3-.9-.1-1.8.6-2.4.2-.2.5-.2.7 0l.8 1c.2.2.2.5 0 .8l-.5.6c-.1.1-.2.4-.1.6Z"/></svg>
 ارتباط مستقیم در واتساپ
 </a>
-<a class="btn neshan" href="geo:35.65738,51.48164?q=35.65738,51.48164(EVAN%20COFFEE)" onclick="openEvanLocation(event)" aria-label="باز کردن موقعیت EVAN COFFEE در برنامه نقشه">مسیریابی ↗</a>
-<script>
-function openEvanLocation(event){
-  event.preventDefault();
-
-  const latitude = 35.65738;
-  const longitude = 51.48164;
-  const label = 'EVAN COFFEE';
-  const geoUrl = `geo:${latitude},${longitude}?q=${latitude},${longitude}(${encodeURIComponent(label)})`;
-  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
-
-  // Android: use the generic geo: URI so Android can choose/show
-  // compatible installed map apps instead of forcing one provider.
-  if (/Android/i.test(navigator.userAgent || '')) {
-    let pageLeft = false;
-    const onVisibilityChange = () => { pageLeft = true; };
-    document.addEventListener('visibilitychange', onVisibilityChange, {once:true});
-
-    window.location.href = geoUrl;
-
-    // If no map app handles geo:, keep a web fallback available.
-    setTimeout(() => {
-      if (!pageLeft && !document.hidden) {
-        window.location.href = googleMapsUrl;
-      }
-    }, 900);
-    return;
-  }
-
-  // iOS / desktop: use Google Maps web as the universal fallback.
-  window.location.href = googleMapsUrl;
-}
-</script>
 </div>
 </div>
 
