@@ -58,6 +58,21 @@ footer span{color:var(--gold)}
 .bakery-section .name{font-size:15px;font-family:Vazirmatn,sans-serif;font-weight:700}
 .bakery-section .note{font-size:9px;color:#89857d}
 .bakery-subhead{display:flex;align-items:center;gap:9px;margin:18px 0 10px;padding:0 2px;color:var(--gold);font-family:Vazirmatn,sans-serif;font-size:14px;font-weight:700}.bakery-subhead i{height:1px;flex:1;background:linear-gradient(to left,transparent,var(--border))}.bakery-section .item-photo{background:#fff}.bakery-section .item-photo img{object-fit:cover;padding:0}.bakery-section .item{min-height:86px}.categories{overscroll-behavior-inline:contain}.section-head h2{min-width:0}.section-head b{flex:0 0 auto}.bakery-subhead span{white-space:nowrap}@media(max-width:430px){.wrap{padding-left:12px;padding-right:12px}.item{gap:9px;padding:11px 9px}.name{font-size:12px}.bakery-section .name{font-size:14px}.item-photo{width:58px;height:58px;flex-basis:58px}.bakery-section .item-photo{width:66px;height:66px;flex-basis:66px}.price{font-size:11px}.price small{font-size:7px}}@media(max-width:340px){.item{gap:7px;padding:10px 8px}.item-photo{width:52px;height:52px;flex-basis:52px}.bakery-section .item-photo{width:58px;height:58px;flex-basis:58px}.bakery-section .name{font-size:13px}.price small{display:block;text-align:left;margin-top:1px}}
+
+/* EVAN PHOTO LIGHTBOX — additive only */
+.evan-lightbox{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:22px;opacity:0;visibility:hidden;pointer-events:none;background:rgba(0,0,0,.78);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:opacity .22s ease,visibility .22s ease}
+.evan-lightbox.open{opacity:1;visibility:visible;pointer-events:auto}
+.evan-lightbox-card{position:relative;width:min(92vw,480px);max-height:90vh;display:flex;flex-direction:column;align-items:center;transform:scale(.94);opacity:0;transition:transform .25s cubic-bezier(.22,1,.36,1),opacity .2s ease}
+.evan-lightbox.open .evan-lightbox-card{transform:scale(1);opacity:1}
+.evan-lightbox-image{display:block;width:auto;height:auto;max-width:92vw;max-height:72vh;object-fit:contain;border-radius:16px;border:1px solid rgba(199,167,106,.28);box-shadow:0 24px 70px rgba(0,0,0,.55)}
+.evan-lightbox-meta{width:100%;margin-top:14px;padding:13px 16px;text-align:center;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(16,16,16,.9);box-shadow:0 12px 35px rgba(0,0,0,.28)}
+.evan-lightbox-name{font-family:Vazirmatn,sans-serif;font-size:15px;font-weight:700;line-height:1.6;color:var(--text)}
+.evan-lightbox-price{margin-top:4px;font-size:12px;color:#dfc487;direction:rtl}
+.evan-lightbox-close{position:absolute;top:-12px;right:-12px;width:38px;height:38px;border:1px solid rgba(199,167,106,.35);border-radius:50%;background:rgba(10,10,10,.94);color:var(--text);font-size:24px;line-height:1;display:grid;place-items:center;cursor:pointer;z-index:2}
+.item-photo{cursor:zoom-in}
+@media(max-width:430px){.evan-lightbox{padding:16px}.evan-lightbox-image{max-width:94vw;max-height:68vh}.evan-lightbox-card{width:94vw}}
+@media(prefers-reduced-motion:reduce){.evan-lightbox,.evan-lightbox-card{transition:none}}
+
 </style>
 </head>
 <body>
@@ -101,5 +116,86 @@ document.querySelectorAll('.section').forEach(s=>s.classList.toggle('hidden',cat
 btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
 }
 </script>
+
+<div aria-label="نمایش بزرگ تصویر" aria-modal="true" class="evan-lightbox" id="evanLightbox" role="dialog">
+  <div class="evan-lightbox-card" id="evanLightboxCard">
+    <button aria-label="بستن" class="evan-lightbox-close" id="evanLightboxClose" type="button">×</button>
+    <img alt="" class="evan-lightbox-image" id="evanLightboxImage"/>
+    <div class="evan-lightbox-meta">
+      <div class="evan-lightbox-name" id="evanLightboxName"></div>
+      <div class="evan-lightbox-price" id="evanLightboxPrice"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const lightbox = document.getElementById('evanLightbox');
+  const card = document.getElementById('evanLightboxCard');
+  const image = document.getElementById('evanLightboxImage');
+  const nameEl = document.getElementById('evanLightboxName');
+  const priceEl = document.getElementById('evanLightboxPrice');
+  const closeBtn = document.getElementById('evanLightboxClose');
+  let lastFocused = null;
+
+  function openLightbox(photo){
+    const item = photo.closest('.item');
+    const img = photo.querySelector('img');
+    if(!item || !img) return;
+
+    lastFocused = document.activeElement;
+    image.src = img.currentSrc || img.src;
+    image.alt = img.alt || '';
+
+    const name = item.querySelector('.name');
+    const price = item.querySelector('.price');
+
+    nameEl.textContent = name ? name.textContent.trim() : '';
+    priceEl.innerHTML = price ? price.innerHTML : '';
+
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+
+  function closeLightbox(){
+    if(!lightbox.classList.contains('open')) return;
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    image.removeAttribute('src');
+    if(lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+  }
+
+  document.querySelectorAll('.item-photo').forEach(function(photo){
+    photo.addEventListener('click', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      openLightbox(photo);
+    });
+  });
+
+  closeBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    closeLightbox();
+  });
+
+  lightbox.addEventListener('click', function(e){
+    if(e.target === lightbox) closeLightbox();
+  });
+
+  card.addEventListener('click', function(e){
+    e.stopPropagation();
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeLightbox();
+  });
+
+  window.addEventListener('popstate', function(){
+    closeLightbox();
+  });
+})();
+</script>
+
 </body>
 </html>
