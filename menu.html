@@ -103,9 +103,9 @@ footer span{color:var(--gold)}
  .evan-item-lightbox__visual img{
   display:block;
   width:100%;
-  aspect-ratio:1 / 1;
-  height:auto;
-  max-height:min(62vh,460px);
+  height:min(62vh,460px);
+  aspect-ratio:auto;
+  max-height:none;
   object-fit:contain;
   object-position:center;
   border-radius:15px;
@@ -150,8 +150,12 @@ footer span{color:var(--gold)}
   .evan-item-lightbox__shell{width:min(94vw,430px)}
   .evan-item-lightbox__visual{padding:10px}
   .evan-item-lightbox__visual img{
-    aspect-ratio:1 / 1;
-    max-height:58vh;
+    width:100%;
+    height:58vh;
+    aspect-ratio:auto;
+    max-height:none;
+    object-fit:contain;
+    object-position:center;
     border-radius:12px;
   }
 }
