@@ -100,16 +100,10 @@ footer span{color:var(--gold)}
   border-radius:18px 18px 6px 6px;
   pointer-events:none;
 }
- .evan-item-lightbox__visual img{
-  display:block;
-  width:100%;
-  height:min(62vh,460px);
-  aspect-ratio:auto;
-  max-height:none;
-  object-fit:contain;
-  object-position:center;
-  border-radius:15px;
-  background:#fff;
+.evan-item-lightbox__visual img{
+  display:block;width:100%;height:min(62vh,460px);
+  object-fit:contain;border-radius:15px;
+  background:rgba(255,255,255,.025);
 }
 .evan-item-lightbox__emoji{
   min-height:min(50vh,360px);
@@ -144,21 +138,6 @@ footer span{color:var(--gold)}
   box-shadow:0 8px 24px rgba(0,0,0,.35);
 }
 .evan-item-lightbox__close:active{transform:scale(.94)}
-
-@media(max-width:430px){
-  .evan-item-lightbox{padding:14px}
-  .evan-item-lightbox__shell{width:min(94vw,430px)}
-  .evan-item-lightbox__visual{padding:10px}
-  .evan-item-lightbox__visual img{
-    width:100%;
-    height:58vh;
-    aspect-ratio:auto;
-    max-height:none;
-    object-fit:contain;
-    object-position:center;
-    border-radius:12px;
-  }
-}
 </style>
 
 </head>
