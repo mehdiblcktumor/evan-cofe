@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#070707">
+<title>ورود مدیریت | EVAN COFFEE</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600&display=swap');
+:root{--bg:#070707;--panel:#111112;--txt:#f5f1e9;--muted:#969087;--gold:#c7a76a;--gold2:#ecd8a9;--line:rgba(199,167,106,.24)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 50% -12%,rgba(199,167,106,.2),transparent 38%),radial-gradient(circle at 50% 110%,rgba(124,70,42,.12),transparent 38%),var(--bg);color:var(--txt);font-family:Vazirmatn,sans-serif}
+.login-wrap{width:min(100%,430px)}
+.brand{text-align:center;margin-bottom:24px}.brand-mark{width:66px;height:66px;margin:0 auto 16px;border:1px solid rgba(199,167,106,.55);border-radius:50%;display:grid;place-items:center;color:var(--gold2);font:600 27px "Playfair Display",serif;letter-spacing:-3px;box-shadow:0 0 0 8px rgba(199,167,106,.035),0 18px 50px #000}
+.brand-name{font:500 29px "Playfair Display",serif;letter-spacing:5px;direction:ltr}.eyebrow{margin-top:10px;color:var(--gold);font-size:9px;letter-spacing:3px;direction:ltr}
+.panel{position:relative;overflow:hidden;padding:34px 27px 29px;border:1px solid var(--line);border-radius:25px;background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.018));box-shadow:0 28px 80px rgba(0,0,0,.48),inset 0 0 0 1px rgba(255,255,255,.025)}
+.panel:before{content:"";position:absolute;inset:9px;border:1px solid rgba(199,167,106,.1);border-radius:18px;pointer-events:none}.panel>*{position:relative}
+.heading{text-align:center;margin-bottom:27px}.heading h1{font-size:21px;font-weight:600}.heading p{margin-top:8px;color:var(--muted);font-size:10px}
+.field{margin-bottom:17px}.field label{display:block;margin-bottom:8px;color:#d7c69f;font-size:11px}.input-wrap{position:relative}.input-wrap input{width:100%;height:50px;padding:0 15px;border:1px solid rgba(255,255,255,.1);border-radius:13px;outline:0;background:rgba(0,0,0,.28);color:var(--txt);font:400 13px Vazirmatn,sans-serif;transition:border-color .2s,box-shadow .2s}.input-wrap input:focus{border-color:rgba(199,167,106,.65);box-shadow:0 0 0 4px rgba(199,167,106,.08)}
+.toggle{position:absolute;left:13px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--muted);cursor:pointer;font:10px Vazirmatn,sans-serif}
+.submit{width:100%;height:51px;margin-top:7px;border:1px solid rgba(199,167,106,.65);border-radius:13px;background:linear-gradient(135deg,#c7a76a,#98743b);color:#16120b;cursor:pointer;font:700 13px Vazirmatn,sans-serif;box-shadow:0 12px 28px rgba(199,167,106,.15);transition:transform .2s,filter .2s}.submit:hover{filter:brightness(1.08);transform:translateY(-1px)}.submit:active{transform:scale(.98)}
+.message{min-height:20px;margin-top:14px;text-align:center;color:#d58f82;font-size:10px}.security{text-align:center;margin-top:22px;color:#625e57;font-size:9px}.security span{color:var(--gold)}
+.back{display:block;margin-top:20px;text-align:center;color:var(--muted);font-size:10px;text-decoration:none}.back:hover{color:var(--gold2)}
+@media(max-width:380px){body{padding:16px}.panel{padding:29px 20px 24px}.brand-name{font-size:25px}}
+</style>
+</head>
+<body>
+<main class="login-wrap">
+<header class="brand"><div class="brand-mark">e</div><div class="brand-name">EVAN COFFEE</div><div class="eyebrow">PRIVATE MANAGEMENT</div></header>
+<section class="panel">
+<div class="heading"><h1>ورود مدیریت</h1><p>برای مدیریت منو و اطلاعات کافه وارد شوید.</p></div>
+<form id="loginForm" autocomplete="on">
+<div class="field"><label for="username">نام کاربری</label><div class="input-wrap"><input id="username" name="username" type="text" autocomplete="username" placeholder="نام کاربری مدیر" required></div></div>
+<div class="field"><label for="password">رمز عبور</label><div class="input-wrap"><input id="password" name="password" type="password" autocomplete="current-password" placeholder="رمز عبور خود را وارد کنید" required><button class="toggle" type="button" id="togglePassword">نمایش</button></div></div>
+<button class="submit" type="submit">ورود امن به پنل</button><div class="message" id="message" role="status"></div>
+</form>
+<div class="security">دسترسی این بخش فقط برای <span>مدیر سایت</span> مجاز است.</div>
+</section>
+<a class="back" href="index.html">بازگشت به صفحه اصلی</a>
+</main>
+<script>
+const password=document.getElementById('password');
+document.getElementById('togglePassword').addEventListener('click',function(){const visible=password.type==='text';password.type=visible?'password':'text';this.textContent=visible?'نمایش':'پنهان کردن'});
+document.getElementById('loginForm').addEventListener('submit',async function(e){e.preventDefault();const message=document.getElementById('message');const body={username:document.getElementById('username').value.trim(),password:password.value};message.textContent='در حال بررسی...';try{const r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const data=await r.json();if(!r.ok)throw new Error(data.error||'ورود ناموفق بود');localStorage.setItem('evan_admin_token',data.token);location.href='/admin'}catch(err){message.textContent=err.message}});
+</script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a396c683ba16fead',t:'MTc4OTEzMDc4OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
